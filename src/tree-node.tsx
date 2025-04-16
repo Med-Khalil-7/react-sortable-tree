@@ -1,4 +1,4 @@
-import React, { Children, Component, cloneElement } from 'react'
+import React, { Children, Component, cloneElement, createRef } from 'react'
 import { ConnectDropTarget } from 'react-dnd'
 import { classnames } from './utils/classnames'
 import './tree-node.css'
@@ -50,6 +50,7 @@ const defaultProps = {
 }
 
 class TreeNodeComponent extends Component<TreeRendererProps> {
+  private nodeRef = createRef<HTMLDivElement>()
   render() {
     const props = { ...defaultProps, ...this.props }
     const {
@@ -195,7 +196,7 @@ class TreeNodeComponent extends Component<TreeRendererProps> {
         {...otherProps}
         style={{ height: `${calculatedRowHeight}px` }}
         className={classnames('rst__node', rowDirectionClass ?? '')}
-        ref={(node) => (this.node = node)}>
+        ref={this.nodeRef}>
         {scaffold}
 
         <div className="rst__nodeContent" style={style}>
